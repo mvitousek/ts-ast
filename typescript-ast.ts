@@ -6,229 +6,6 @@ import * as ts from "typescript";
 export function print_ast(sourceFile) {
     emit(sourceFile);
 
-    function emitIdentifier(node: ts.Identifier) {
-        write("Identifier*(text=");
-        write(node.text);
-        write(")");
-    }
-
-    function emitQualifiedName(node: ts.QualifiedName) {
-        write("QualifiedName(left=");
-        emit(node.left);
-        write(", right=");
-        emit(node.right);
-        write(")");
-    }
-
-    function emitComputedPropertyName(node: ts.ComputedPropertyName) {
-        write("ComputedPropertyName(expression=");
-        emit(node.expression);
-        write(")");
-    }    
-    
-    function emitDecorator(node: ts.Decorator) {
-        write("Decorator(expression=");
-        emit(node.expression);
-        write(")");
-    }
-    
-    function emitTypeParameterDeclaration(node: ts.TypeParameterDeclaration) {
-        write("TypeParameterDeclaration*(name=");
-        emit(node.name);
-        write(", constraint=");
-        emit(node.constraint);
-        write(")");
-    }
-
-    function emitCallConstructSignatureDeclaration(node: ts.CallSignatureDeclaration | ts.ConstructSignatureDeclaration) {
-        if (node.kind === ts.SyntaxKind.CallSignature)
-            write("CallSignatureDeclaration");
-        else
-            write("ConstructSignatureDeclaration");
-        write("*(name=");
-        emit(node.name);
-        write(", typeParameters=");
-        emit(node.typeParameters);
-        write(", parameters=");
-        emit(node.parameters);
-        write(", type=");
-        emit(node.type);
-        write(", questionToken=");
-        emit(node.questionToken);
-        write(")");
-    }
-
-    function emitVariableDeclaration(node: ts.VariableDeclaration) {
-        write("VariableDeclaration*(name=");
-        emit(node.name);
-        write(", type=");
-        emit(node.type);
-        write(", initializer=");
-        emit(node.initializer);
-        write(")");
-    }
-
-    function emitVariableDeclarationList(node: ts.VariableDeclarationList) {
-        write("VariableDeclarationList(declarations=");
-        emit(node.declarations);
-        write(")");
-    }
-
-    function emitParameterDeclaration(node: ts.ParameterDeclaration) {
-        write("VariableDeclaration(dotDotDotToken=");
-        emit(node.dotDotDotToken);
-        write(", name=");
-        emit(node.name);
-        write(", questionToken=");
-        emit(node.questionToken);
-        write(", type=");
-        emit(node.type);
-        write(", initializer=");
-        emit(node.initializer);
-        write(")");
-    }
-    
-    function emitBindingElement(node: ts.BindingElement) {
-        write("BindingElement(dotDotDotToken=");
-        emit(node.dotDotDotToken);
-        write(", name=");
-        emit(node.name);
-        write(", propertyName=");
-        emit(node.propertyName);
-        write(", initializer=");
-        emit(node.initializer);
-        write(")");
-    }
-
-    function emitPropertySignature(node: ts.PropertySignature) {
-        write("PropertySignature(name=");
-        emit(node.name);
-        write(", questionToken=");
-        emit(node.questionToken);
-        write(", type=");
-        emit(node.type);
-        write(", initializer=");
-        emit(node.initializer);
-        write(")");
-    }
-
-    function emitPropertyDeclaration(node: ts.PropertyDeclaration) {
-        write("PropertyDeclaration*(name=");
-        emit(node.name);
-        write(", type=");
-        emit(node.type);
-        write(", initializer=");
-        emit(node.initializer);
-        write(")");
-    }
-
-    function emitPropertyAssignment(node: ts.PropertyAssignment) {
-        write("PropertyAssignment(name=");
-        emit(node.name);
-        write(", questionToken=");
-        emit(node.questionToken);
-        write(", initializer=");
-        emit(node.initializer);
-        write(")");
-    }
-
-    function emitShorthandPropertyAssignment(node: ts.ShorthandPropertyAssignment) {
-        write("ShorthandPropertyAssignment(name=");
-        emit(node.name);
-        write(", questionToken=");
-        emit(node.questionToken);
-        write(", equalsToken");
-        emit(node.questionToken);
-        write(", objectAssignmentInitializer=");
-        emit(node.objectAssignmentInitializer);
-        write(")");
-    }
-
-    function emitBindingPattern(node: ts.BindingPattern) {
-        if (node.kind === ts.SyntaxKind.ObjectBindingPattern)
-            write("ObjectBindingPattern");
-        else
-            write("ArrayBindingPattern");
-        write("(elements=");
-        emit(node.elements);
-        write(")");
-    }
-
-    function emitFunctionDeclaration(node: ts.FunctionDeclaration) {
-        write("FunctionDeclaration(name=");
-        emit(node.name);
-        write(", typeParameters=");
-        emit(node.typeParameters);
-        write(", parameters=");
-        emit(node.parameters);
-        write(", type=");
-        emit(node.type);
-        write(", asteriskToken=");
-        emit(node.asteriskToken);
-        write(", questionToken=");
-        emit(node.questionToken);
-        write(", body=");
-        emit(node.body);
-        write(")");
-    }
-
-    function emitMethodSignature(node: ts.MethodSignature) {
-        write("MethodSignature(name=");
-        emit(node.name);
-        write(", typeParameters=");
-        emit(node.typeParameters);
-        write(", parameters=");
-        emit(node.parameters);
-        write(", type=");
-        emit(node.type);
-        write(", questionToken=");
-        emit(node.questionToken);
-        write(")");
-    }
-
-    function emitMethodDeclaration(node: ts.MethodDeclaration) {
-        write("MethodDeclaration(name=");
-        emit(node.name);
-        write(", typeParameters=");
-        emit(node.typeParameters);
-        write(", parameters=");
-        emit(node.parameters);
-        write(", type=");
-        emit(node.type);
-        write(", asteriskToken=");
-        emit(node.asteriskToken);
-        write(", questionToken=");
-        emit(node.questionToken);
-        write(", body=");
-        emit(node.body);
-        write(")");
-    }
-
-    // kind constructor
-    function emitConstructorDeclaration(node: ts.ConstructorDeclaration) {
-        write("ConstructorDeclaration(name=");
-        emit(node.name);
-        write(", typeParameters=");
-        emit(node.typeParameters);
-        write(", parameters=");
-        emit(node.parameters);
-        write(", type=");
-        emit(node.type);
-        write(", asteriskToken=");
-        emit(node.asteriskToken);
-        write(", questionToken=");
-        emit(node.questionToken);
-        write(", body=");
-        emit(node.body);
-        write(")");
-    }    
-
-    function emitSemicolonClassElement(node: ts.SemicolonClassElement) {
-        write("SemicolonClassElement(name=");
-        emit(node.name);
-        write(")");
-    }
-
     function emitNodeArray(narr: ts.NodeArray<ts.Node>) {
         write("[");
         var first = true
@@ -249,40 +26,7 @@ export function print_ast(sourceFile) {
             return emitNodeArray(<ts.NodeArray<ts.Node>> val)
         
         var node = <ts.Node> val;
-
-        switch (node.kind) {
-        case ts.SyntaxKind.Identifier:
-            return emitIdentifier(<ts.Identifier> node);
-        case ts.SyntaxKind.QualifiedName:
-            return emitQualifiedName(<ts.QualifiedName> node);
-        case ts.SyntaxKind.ComputedPropertyName:
-            return emitComputedPropertyName(<ts.ComputedPropertyName> node);
-        case ts.SyntaxKind.Decorator:
-            return emitDecorator(<ts.Decorator> node);
-        case ts.SyntaxKind.TypeParameter:
-            return emitTypeParameterDeclaration(<ts.TypeParameterDeclaration> node);
-        case ts.SyntaxKind.CallSignature:
-        case ts.SyntaxKind.ConstructSignature:
-            return emitCallConstructSignatureDeclaration(<ts.CallSignatureDeclaration | ts.ConstructSignatureDeclaration> node);
-        case ts.SyntaxKind.VariableDeclaration:
-            return emitVariableDeclaration(<ts.VariableDeclaration> node);
-        case ts.SyntaxKind.VariableDeclarationList:
-            return emitVariableDeclarationList(<ts.VariableDeclarationList> node);
-        case ts.SyntaxKind.Parameter:
-            return emitParameterDeclaration(<ts.ParameterDeclaration> node);
-        case ts.SyntaxKind.BindingElement:
-            return emitBindingElement(<ts.BindingElement> node);
-        case ts.SyntaxKind.PropertySignature:
-            return emitPropertySignature(<ts.PropertySignature> node);
-        case ts.SyntaxKind.PropertyDeclaration:
-            return emitPropertyDeclaration(<ts.PropertyDeclaration> node);
-        case ts.SyntaxKind.PropertyAssignment:
-            return emitPropertyAssignment(<ts.PropertyAssignment> node);
-        case ts.SyntaxKind.ShorthandPropertyAssignment:
-            return emitShorthandPropertyAssignment(<ts.ShorthandPropertyAssignment> node);
-        default: 
-            emitArbitraryNode(node);
-        }
+        emitArbitraryNode(node);
 
     }
 
@@ -292,11 +36,11 @@ export function print_ast(sourceFile) {
         var first = true;
         for(var key in node) {
             if (key === "parent" ||
-                key === "text" ||
                 key === "pos" ||
                 key === "end" ||
                 key === "kind" ||
                 (!node[key] && key === "flags") || 
+                (node.kind !== ts.SyntaxKind.Identifier && key === "text") || 
                 (node[key] && node[key] instanceof Function))
                 continue;
             if (!first) {
@@ -612,10 +356,6 @@ export function print_ast(sourceFile) {
 
     function write(message: string) {
         process.stdout.write(message);
-    }
-
-    function printAST(node) {
-        ts.forEachChild(node, emit);
     }
 }
 
